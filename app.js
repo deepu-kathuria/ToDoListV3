@@ -2,12 +2,9 @@
 
 const express = require("express");
 const bodyParser = require("body-parser");
-const date = require(__dirname + "/date.js");
 const mongoose = require('mongoose');
 var session = require('express-session');
 const passport = require('passport');
-const passportLocalMongoose = require('passport-local-mongoose');
-const findOrCreate = require('mongoose-findorcreate');
 const _ = require('lodash');
 const LoginController = require('./Controllers/LoginController');
 const RegisterController = require('./Controllers/RegisterController');
@@ -18,7 +15,6 @@ require('./Models/User');
 
 
 const app = express();
-const Schema = mongoose.Schema;
 
 app.set('view engine', 'ejs');
 
