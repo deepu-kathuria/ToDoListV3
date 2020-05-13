@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+
+<head>
+  <meta charset="utf-8">
+  <title><%=title%></title>
+  <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <link rel="shortcut icon" href="icons/tab_icon.png" type="image/x-icon"/>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+  <!-- Isolated Version of Bootstrap, not needed if your site already uses Bootstrap -->
+  <link rel="stylesheet" href="https://formden.com/static/cdn/bootstrap-iso.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datepicker/1.4.1/css/bootstrap-datepicker3.css"/>
+  <link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+
+<nav class="navbar navbar-expand-lg navbar-dark nav-bg-color">
+  <a class="navbar-brand" href="/">To Do</a>
+  <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+    <span class="navbar-toggler-icon"></span>
+  </button>
+  <div class="collapse navbar-collapse" id="navbarText">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item active">
+        <a class="nav-link" href="/list"  style="display:<%=!display_variable ? "none" : ""%>">Today's List</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/login" style="display:<%=display_variable ? "none" : ""%>">Login</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/register" style="display:<%=display_variable ? "none" : ""%>">Register</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/getSpecificList" style="display:<%=!display_variable ? "none" : ""%>">Go to Date</a>
+      </li>
+      <li class="nav-item">
+        <a class="nav-link" href="/searchList" style="display:<%=!display_variable ? "none" : ""%>">Search a List</a>
+      </li>
+    </ul>
+    <ul class="nav navbar-nav navbar-right">
+    	<li class="nav-item">
+	    	<a class="nav-link active" id= "logout_button" href="/logout" style="display:<%=!display_variable ? "none" : ""%>">Logout</a>
+	    </li>
+    </ul>
+    
+  </div>
+</nav>
