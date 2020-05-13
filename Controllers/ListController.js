@@ -6,17 +6,12 @@ const Item = mongoose.model("Item");
 
 exports.GetList = (req, res) => {
   if(req.isAuthenticated()){
-    // console.log(req.user.username + "   " + getDateF())
     Item.findOne({userId: req.user.username, date: GetDate.getDate()}, (err, result) => {
       if(err)
         console.log(err);
       if(!result){
-        // console.log("1");
-        // console.log("result is null");
         res.render('list', {listTitle: GetDate.getDate(), newListItems:[], display_variable:true, title: "Today's List"});
       }else{
-        // console.log("2");
-        // console.log(result.result);
         res.render('list', {listTitle: GetDate.getDate(), newListItems:result.result, display_variable:true, title: "Today's List"});
       }
       res.end();
@@ -83,7 +78,6 @@ exports.PostCompleteItem = (req, res) => {
 exports.DeleteItem = (req, res) => {
   if(req.isAuthenticated()){
     var checkbox1 = typeof req.body.checkbox == "object" ? checkbox1 = req.body.checkbox["0"] : req.body.checkbox;
-    // console.log(checkbox1);
     Item.updateOne({userId: req.user.username, date: GetDate.getDate()}, 
       {"$pull": {"result" : {"_id" : checkbox1 }}}, (err, obj) => {
         if(!err){

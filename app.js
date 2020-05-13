@@ -14,7 +14,6 @@ const RegisterController = require('./Controllers/RegisterController');
 const ListController = require('./Controllers/ListController');
 const SpecificListController = require('./Controllers/SpecificListController');
 const SearchListController = require('./Controllers/SearchListController');
-require('./Models/Item');
 require('./Models/User');
 
 
@@ -39,7 +38,6 @@ mongoose.connect("mongodb://localhost:27017/todolistDBV3", { useNewUrlParser: tr
 mongoose.set('useCreateIndex', true);
 
 const User = mongoose.model("User");
-const Item = mongoose.model("Item");
 
 app.route('/login')
 .get(LoginController.GetLogin)

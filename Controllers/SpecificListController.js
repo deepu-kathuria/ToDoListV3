@@ -9,7 +9,6 @@ exports.GetSpecificList = (req, res) => {
 
 exports.PostSpecificList = (req, res) => {
   if(req.isAuthenticated()){
-    // console.log(req.body.date);
     Item.findOne({userId: req.user.username , date: req.body.date}, (err, result) => {
       if(err)
         console.log(err);

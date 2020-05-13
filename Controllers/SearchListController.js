@@ -9,8 +9,6 @@ exports.GetSearchList = (req, res) => {
 
 exports.PostSearchList = (req, res) => {
   if(req.isAuthenticated()){
-    // console.log(req.body.date);
-    // console.log(req.body.username);
     Item.findOne({userId: req.body.username , date: req.body.date}, (err, result) => {
       if(err)
         console.log(err);

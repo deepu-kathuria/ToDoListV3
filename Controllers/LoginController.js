@@ -19,7 +19,6 @@ passport.deserializeUser(function(id, done) {
 
 
 module.exports.GetLogin = (req, res) => { 
-	// console.log(req.session);
     if(req.isAuthenticated()){
 	  res.redirect('/list');
 	}
@@ -30,10 +29,6 @@ module.exports.GetLogin = (req, res) => {
 };
 
 module.exports.PostLogin = (req, res, next) => {
-	// const user = new User({
- //      username: req.body.username,
- //      password: req.body.password
- //    });
 
     passport.authenticate('local',
 	  (err, user, info) => {
