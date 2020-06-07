@@ -3,23 +3,21 @@ const mongoose = require('mongoose');
 
 const Item = mongoose.model("Item");
 
-exports.GetSpecificList = (req, res) => {
-  res.render('getSpecificList', {display_variable:true, title: "Go To Date"});
-};
-
 exports.PostSpecificList = (req, res) => {
   if(req.isAuthenticated()){
+    // console.log(req.body);
+    // console.log(typeof req.body.date);
     Item.findOne({userId: req.user.username , date: req.body.date}, (err, result) => {
       if(err)
         console.log(err);
       if(!result){
-        res.render('SpecificDateList', {listTitle: req.body.date, newListItems:[], display_variable:true, title: "Go To Date"});
+        res.status(200).json([]);
       }else{
-        res.render('SpecificDateList', {listTitle: req.body.date, newListItems:result.result, display_variable:true, title: "Go To Date"});
+        res.status(200).json({Content: result.result});
       }
     });
   }
   else{
-    res.redirect("/login");
+    res.status(400).json({msg: 'not authoried'});
   }
 };

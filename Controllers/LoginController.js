@@ -17,19 +17,14 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
-
-module.exports.GetLogin = (req, res) => { 
-    if(req.isAuthenticated()){
-	  res.redirect('/list');
-	}
-	else{
-		console.log('unauthorized');
-	  res.render('login',  {display_variable: false, title: "Login"});
-	}
-};
-
 module.exports.PostLogin = (req, res, next) => {
-
+	// console.log(req);
+	// if(req.isAuthenticated())
+	// {
+	// 	console.log('yes');
+	// 	return res.send(500);
+	// }
+	// res.json({msg:'My Req has been sent'});
     passport.authenticate('local',
 	  (err, user, info) => {
 	    if (err) {
@@ -37,7 +32,7 @@ module.exports.PostLogin = (req, res, next) => {
 	    }
 
 	    if (!user) {
-	      return res.redirect('/login?info=' + "Incorrect Credential");
+	      return res.status(400).json({msg: 'no user found'});
 	    }
 
 	    req.logIn(user, function(err) {
@@ -45,7 +40,7 @@ module.exports.PostLogin = (req, res, next) => {
 	        return next(err);
 	      }
 
-	      return res.redirect('/list');
+	      return res.status(200).json({msg:'found'});
 	    });
 
 	  })(req, res, next);

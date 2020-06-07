@@ -8,6 +8,6 @@ exports.getDate = function() {
   month = month < 10 ? "0" + month : month;
   day = day < 10 ? "0" + day : day;
 
-  return month + "/" + day + "/" + year;
+  return year + '-' + month + '-' + day;
 
 };

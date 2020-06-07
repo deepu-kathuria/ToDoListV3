@@ -5,20 +5,15 @@ const passportLocalMongoose = require('passport-local-mongoose');
 
 const User = mongoose.model("User");
 
-
-module.exports.GetRegister = (req, res) => { 
-    res.render('register', {display_variable:false, title: "Register"});
-};
-
 module.exports.PostRegister = (req, res) => { 
   User.register({username: req.body.username}, req.body.password, (err, user) => {
     if(err)
     {
       console.log(err);
-      res.redirect('/register?info=' + "User already Registered!")
+      res.status(400).json({msg:"User already Registered!"});
     }else{
       passport.authenticate('local')(req, res, function(){
-        res.redirect('/login');
+        res.send(200);
       });
     }
   });

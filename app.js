@@ -1,24 +1,22 @@
 //jshint esversion:6
 
 const express = require("express");
-const bodyParser = require("body-parser");
 const mongoose = require('mongoose');
 var session = require('express-session');
 const passport = require('passport');
-const _ = require('lodash');
 const LoginController = require('./Controllers/LoginController');
 const RegisterController = require('./Controllers/RegisterController');
 const ListController = require('./Controllers/ListController');
 const SpecificListController = require('./Controllers/SpecificListController');
 const SearchListController = require('./Controllers/SearchListController');
+// const cors = require('cors');
 require('./Models/User');
 
 
 const app = express();
 
-app.set('view engine', 'ejs');
-
-app.use(bodyParser.urlencoded({extended: true}));
+app.use(express.json())
+app.use(express.urlencoded({extended: true}));
 app.use(express.static("public"));
 
 app.use(session({
@@ -35,13 +33,26 @@ mongoose.set('useCreateIndex', true);
 
 const User = mongoose.model("User");
 
-app.route('/login')
-.get(LoginController.GetLogin)
+// app.use(cors);
+
+app.route('/api/login')
 .post(LoginController.PostLogin);
 
-app.route('/register')
-.get(RegisterController.GetRegister)
+app.route('/api/register')
 .post(RegisterController.PostRegister);
+
+app.route('/api/checkSession')
+.get((req, res) => {
+  if(req.isAuthenticated())
+  {
+    res.status(200).json({msg: 'authenticated'});
+    res.end();
+  }
+  else{
+    res.status(200).json({msg: 'not authenticated'});
+    res.end()
+  }
+})
 
 app.route('/')
 
@@ -52,42 +63,39 @@ app.route('/')
     res.redirect('/list');
 });
 
-app.route('/list')
+app.route('/api/list')
 
 .get(ListController.GetList)
 
 .post(ListController.PostList);
 
-app.route('/logout')
-
-.get((req, res) => {
+app.route('/api/logout')
+.post((req, res) => {
+  // console.log('1');
   req.session.destroy((err) => {
     if(!err)
-      res.redirect('/login');
+      res.send(200);
+    // console.log(err);
   });
 });
 
-app.route('/getSpecificList')
-
-.get(SpecificListController.GetSpecificList)
-
+app.route('/api/getSpecificList')
 .post(SpecificListController.PostSpecificList);
 
-app.route('/CompleteItem')
+app.route('/api/CompleteItem')
 .post(ListController.PostCompleteItem);
 
-app.route('/list/deleteItem')
+app.route('/api/list/deleteItem')
 .post(ListController.DeleteItem);
 
-app.route('/searchList')
-.get(SearchListController.GetSearchList)
+app.route('/api/searchList')
 .post(SearchListController.PostSearchList);
 
 let port = process.env.PORT;
 if(port == null || port == "")
 {
-  port = 3000;
+  port = 3001;
 }
 app.listen(port, function() {
-  console.log("Server started on port 3000");
+  console.log("Server started on port 3001");
 });

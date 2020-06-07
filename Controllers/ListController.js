@@ -10,15 +10,16 @@ exports.GetList = (req, res) => {
       if(err)
         console.log(err);
       if(!result){
-        res.render('list', {listTitle: GetDate.getDate(), newListItems:[], display_variable:true, title: "Today's List"});
+        // console.log('result:',result);
+        return res.status(200).json([]);
       }else{
-        res.render('list', {listTitle: GetDate.getDate(), newListItems:result.result, display_variable:true, title: "Today's List"});
+        return res.status(200).json(result.result);
       }
       res.end();
     });
   }
   else{
-    res.redirect('/login');
+    res.status(400).json({msg: 'not authoried'});
   }
 };
 
@@ -34,7 +35,7 @@ exports.PostList = (req, res) => {
             if(err)
               console.log(err);
             else
-              res.redirect('/list');
+              res.send(200);
           });
         }
         else
@@ -50,7 +51,7 @@ exports.PostList = (req, res) => {
             }
             else
             {
-              res.redirect('/list');
+              res.send(200);
             }
           });
         }
@@ -61,12 +62,12 @@ exports.PostList = (req, res) => {
 
 exports.PostCompleteItem = (req, res) => {
   if(req.isAuthenticated()){
-    var toggle = typeof req.body.checkbox == "string" ? false : true;
+    var toggle = req.body.itemStatus;
     Item.updateOne({userId: req.user.username, date: GetDate.getDate(), 'result._id': req.body.checkbox}, 
       {$set: {'result.$.isDone': toggle}}, (err) => {
         if(err)
           console.log(err);
-      res.redirect('/list');
+      res.send(200);
     });
   }
   else
@@ -77,11 +78,15 @@ exports.PostCompleteItem = (req, res) => {
 
 exports.DeleteItem = (req, res) => {
   if(req.isAuthenticated()){
-    var checkbox1 = typeof req.body.checkbox == "object" ? checkbox1 = req.body.checkbox["0"] : req.body.checkbox;
+    var id = req.body.item;
     Item.updateOne({userId: req.user.username, date: GetDate.getDate()}, 
-      {"$pull": {"result" : {"_id" : checkbox1 }}}, (err, obj) => {
+      {"$pull": {"result" : {"_id" : id }}}, (err, obj) => {
         if(!err){
-          res.redirect('/list');
+          res.sendStatus(200);
+        }
+        else
+        {
+          res.send(400).json({msg: 'Could not delete Item'});
         }
       });
   }
