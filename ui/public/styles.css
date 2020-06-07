@@ -88,6 +88,7 @@ form.item {
   font-size: 30px;
   padding-bottom: 6px;
   border-width: 0;
+  margin-right: 0px;
 }
 
 .text-input {
@@ -98,7 +99,7 @@ form.item {
   /*background: transparent;*/
   font-size: 20px;
   font-weight: 200;
-  /* width: 313px; */
+  width: 313px;
 }
 
 .text-input:focus {

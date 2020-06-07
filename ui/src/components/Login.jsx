@@ -50,7 +50,7 @@ function Login(){
 
         </div>
         </div> */}
-            <div className="row">
+            <div className="row m-0">
                 {status === 200 && <Redirect to='/list' />}
                 <div className="col-md-4 col-lg-4 col-sm-4"></div>
                 <div className="col-md-4 col-lg-4 col-sm-4 form-border">

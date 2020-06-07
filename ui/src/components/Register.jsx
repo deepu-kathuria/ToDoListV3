@@ -46,7 +46,7 @@ function Register(){
             <div className='box-show' id='heading'>
                 <h2>Register</h2>
             </div>
-            <div className="row">
+            <div className="row m-0">
                 {status === 200 && <Redirect to='/list' />}
                 <div className="col-md-4"></div>
                 <div className="col-md-4 form-border">
